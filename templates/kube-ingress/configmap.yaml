@@ -1,0 +1,27 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ingress.name}}
+  namespace: {{ingress.namespace}}
+  labels:
+    k8s-addon: {{ingress.name}}.addons.k8s.io
+    app: {{ingress.name}}
+    repo: {{ingress.repo}}
+data:
+  max-worker-connections: "16384"
+  worker-processes: "2"
+  use-proxy-protocol: "true"
+  server-tokens: "false"
+  secure-backends: "false"
+  proxy-body-size: 1m
+  use-http2: "true"
+  ssl-redirect: "true"
+  large-client-header-buffers: "4 32k"
+  enable-vts-status: "true"
+  client-header-timeout: "30"
+  client-body-timeout: "30"
+  limit-req-status-code: "429"
+  error-log-level: "error"
+  ssl-protocols: "TLSv1.1 TLSv1.2"
+  ssl-ciphers: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:!aNULL:!MD5"

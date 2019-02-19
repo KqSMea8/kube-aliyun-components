@@ -1,0 +1,26 @@
+---
+version: '3.4'
+
+services:
+
+  ntpl:
+    image: ikerry/ntpl:v0.3.5
+    working_dir: /app
+    volumes:
+      - "$HOME/.kube:/root/.kube"
+      - ".:/app"
+
+  ossutil:
+    image: ikerry/ossutil:v1.4.3
+    working_dir: /app
+    volumes:
+      - "$HOME/.kube:/root/.kube"
+      - "$HOME/.ossutilconfig:/root/.ossutilconfig"
+      - ".:/app"
+
+  kubectl:
+    image: lachlanevenson/k8s-kubectl:v1.13.3
+    working_dir: /app
+    volumes:
+      - "$HOME/.kube:/root/.kube"
+      - ".:/app"

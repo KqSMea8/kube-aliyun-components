@@ -1,0 +1,17 @@
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ingress.name}}
+  namespace: {{ingress.namespace}}
+  labels:
+    k8s-addon: {{ingress.name}}.addons.k8s.io
+    app: {{ingress.name}}
+    repo: {{ingress.repo}}
+spec:
+  minAvailable: 25%
+  selector:
+    matchLabels:
+      k8s-addon: {{ingress.name}}.addons.k8s.io
+      app: {{ingress.name}}
+      repo: {{ingress.repo}}

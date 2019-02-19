@@ -1,0 +1,99 @@
+---
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  name: {{ingress.name}}
+  namespace: {{ingress.namespace}}
+  labels:
+    k8s-addon: {{ingress.name}}.addons.k8s.io
+    app: {{ingress.name}}
+    repo: {{ingress.repo}}
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: "25%"
+  selector:
+    matchLabels:
+      k8s-addon: {{ingress.name}}.addons.k8s.io
+      app: {{ingress.name}}
+      repo: {{ingress.repo}}
+  template:
+    metadata:
+      labels:
+        k8s-addon: {{ingress.name}}.addons.k8s.io
+        app: {{ingress.name}}
+        repo: {{ingress.repo}}
+    spec:
+      hostNetwork: true
+      terminationGracePeriodSeconds: 60
+      serviceAccountName: {{ingress.name}}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - {{ingress.name}}
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - image: quay-mirror.qiniu.com/kubernetes-ingress-controller/nginx-ingress-controller:0.22.0
+          name: {{ingress.name}}-controller
+          imagePullPolicy: Always
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sleep", "15"]
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            periodSeconds: 120
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          args:
+            - /nginx-ingress-controller
+            - --configmap=$(POD_NAMESPACE)/ingress-nodeport
+            - --election-id=ingress-nodeport-leader
+            - --enable-ssl-passthrough
+          securityContext:
+            capabilities:
+              add:
+                - NET_BIND_SERVICE
+              drop:
+                - ALL
+            runAsUser: 33

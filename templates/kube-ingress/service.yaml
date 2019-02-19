@@ -1,0 +1,26 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ingress.name}}
+  namespace: {{ingress.namespace}}
+  labels:
+    k8s-addon: {{ingress.name}}.addons.k8s.io
+    app: {{ingress.name}}
+    repo: {{ingress.repo}}
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: "Cluster"
+  ports:
+  - port: 80
+    name: http
+    targetPort: 80
+    nodePort: {{ingress.httpPort}}
+  - port: 443
+    name: https
+    targetPort: 443
+    nodePort: {{ingress.httpsPort}}
+  selector:
+    k8s-addon: {{ingress.name}}.addons.k8s.io
+    app: {{ingress.name}}
+    repo: {{ingress.repo}}

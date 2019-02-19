@@ -1,0 +1,55 @@
+---
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  name: {{onboarding.name}}
+  namespace: {{onboarding.namespace}}
+  labels:
+    app: {{onboarding.name}}
+    repo: {{onboarding.repo}}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: {{onboarding.name}}
+      repo: {{onboarding.repo}}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 50%
+  template:
+    metadata:
+      labels:
+        app: {{onboarding.name}}
+        repo: {{onboarding.repo}}
+    spec:
+      containers:
+        - name: {{onboarding.name}}
+          image: {{{onboarding.container}}}:{{onboarding.version}}
+          ports:
+          - containerPort: {{onboarding.containerPort}}
+          livenessProbe:
+            exec:
+              command:
+              - curl
+              - localhost:{{onboarding.containerPort}}/api/v1/healthy
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /api/v1/ready
+              port: {{onboarding.containerPort}}
+            initialDelaySeconds: 3
+            timeoutSeconds: 8
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 250m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+      imagePullSecrets:
+        - name: regsecret        

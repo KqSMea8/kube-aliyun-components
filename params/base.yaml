@@ -1,0 +1,16 @@
+---
+ingress:
+  name: kube-ingress
+  namespace: kube-system
+  repo: kube-aliyun
+  httpPort: 32080
+  httpsPort: 32443
+
+onboarding:
+  name: onboarding
+  namespace: platform
+  repo: kube-aliyun
+  container: registry-vpc.cn-hangzhou.aliyuncs.com/platform_pre/node_metrics
+  containerPort: 8080
+  version: v0.1.0
+  dns_name: dev.gugecc.com
