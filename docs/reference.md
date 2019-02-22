@@ -22,6 +22,7 @@
 
 - log:
   - https://www.alibabacloud.com/help/zh/doc-detail/74878.htm?spm=a2c63.p38356.a3.16.109e52adh8mZgO
+  - https://tech.antfin.com/docs/2/66658
 
 - grpc
   - https://github.com/nginxinc/kubernetes-ingress/tree/master/examples/grpc-services

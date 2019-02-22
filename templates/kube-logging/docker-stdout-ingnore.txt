@@ -1,0 +1,20 @@
+{
+ "inputs": [
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "ExcludeLabel": {
+                 "io.kubernetes.pod.namespace": "kube-system"
+             }
+         }
+     },
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "ExcludeLabel": {
+                 "io.kubernetes.pod.namespace": "cert-manager"
+             }
+         }
+     }
+ ]
+}
