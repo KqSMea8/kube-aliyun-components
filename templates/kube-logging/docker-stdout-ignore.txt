@@ -1,0 +1,36 @@
+{
+ "inputs": [
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "ExcludeLabel": {
+                 "io.kubernetes.container.name": "calico-node"
+             }
+         }
+     },
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "ExcludeLabel": {
+                 "io.kubernetes.container.name": "kubernetes-dashboard"
+             }
+         }
+     },
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "ExcludeLabel": {
+                 "io.kubernetes.container.name": "kube-ingress-controller"
+             }
+         }
+     },
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "ExcludeLabel": {
+                 "io.kubernetes.pod.namespace": "cert-manager"
+             }
+         }
+     }
+ ]
+}
