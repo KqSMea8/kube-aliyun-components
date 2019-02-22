@@ -1,0 +1,56 @@
+{
+ "inputs": [
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "Stdout": true,
+             "Stderr": true,
+             "IncludeLabel": {},
+             "ExcludeLabel": {
+                 "io.kubernetes.container.name": "calico-node"
+             },
+             "IncludeEnv": {},
+             "ExcludeEnv": {}
+         }
+     },
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "Stdout": true,
+             "Stderr": true,
+             "IncludeLabel": {},
+             "ExcludeLabel": {
+                 "io.kubernetes.container.name": "cert-manager"
+             },
+             "IncludeEnv": {},
+             "ExcludeEnv": {}
+         }
+     },
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "Stdout": true,
+             "Stderr": true,
+             "IncludeLabel": {},
+             "ExcludeLabel": {
+                 "io.kubernetes.container.name": "acmesolver"
+             },
+             "IncludeEnv": {},
+             "ExcludeEnv": {}
+         }
+     },
+     {
+         "type": "service_docker_stdout",
+         "detail": {
+             "Stdout": true,
+             "Stderr": true,
+             "IncludeLabel": {},
+             "ExcludeLabel": {
+                 "io.kubernetes.container.name": "kubernetes-dashboard"
+             },
+             "IncludeEnv": {},
+             "ExcludeEnv": {}
+         }
+     }
+ ]
+}
