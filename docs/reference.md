@@ -19,3 +19,9 @@
 
 - Others:
   - https://www.jianshu.com/p/1638146c04b2?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+
+- log:
+  - https://www.alibabacloud.com/help/zh/doc-detail/74878.htm?spm=a2c63.p38356.a3.16.109e52adh8mZgO
+
+- grpc
+  - https://github.com/nginxinc/kubernetes-ingress/tree/master/examples/grpc-services

@@ -1,0 +1,83 @@
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: logtail-ds
+  namespace: kube-system
+  labels:
+    k8s-app: logtail-ds
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        k8s-app: logtail-ds
+        kubernetes.io/cluster-service: "true"
+        version: v1.0
+      # This annotation ensures that logtail does not get evicted if the node
+      # supports critical pod annotation based priority scheme.
+      # Note that this does not guarantee admission on the nodes (#40573).
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+    spec:
+      containers:
+      - name: logtail
+        image: {{{logs.logtail.image}}}:{{{logs.logtail.version}}}
+        resources:
+          limits:
+            memory: {{ logs.resources.limits.memory }}
+          requests:
+            cpu: {{ logs.resources.requests.cpu }}
+            memory: {{ logs.resources.requests.memory }}
+        livenessProbe:
+          exec:
+            command:
+            - /etc/init.d/ilogtaild
+            - status
+          initialDelaySeconds: 30
+          periodSeconds: 60
+        securityContext:
+          privileged: true
+        env:
+          - name: "ALIYUN_LOGTAIL_CONFIG"
+            value: "/etc/ilogtail/conf/cn_hangzhou/ilogtail_config.json"
+          - name: "ALIYUN_LOGTAIL_USER_ID"
+            valueFrom:
+              secretKeyRef:
+                name: cloudaccesskey
+                key: UserID
+          - name: "ALIYUN_LOGTAIL_USER_DEFINED_ID"
+            value: "{{logs.projectName}}"
+          - name: "ALICLOUD_LOG_ACCESS_KEY_ID"
+            valueFrom:
+              secretKeyRef:
+                name: cloudaccesskey
+                key: AccessKeyID
+          - name: "ALICLOUD_LOG_ACCESS_KEY_SECRET"
+            valueFrom:
+              secretKeyRef:
+                name: cloudaccesskey
+                key: AccessKeySecret
+          - name: "ALICLOUD_LOG_DEFAULT_PROJECT"
+            value: "{{ logs.projectName }}"
+          - name: "ALICLOUD_LOG_ENDPOINT"
+            value: "{{ logs.endpoint }}"
+          - name: "ALICLOUD_LOG_DEFAULT_MACHINE_GROUP"
+            value: "{{ logs.machineGroupId }}"
+        volumeMounts:
+        - name: sock
+          mountPath: /var/run/docker.sock
+        - name: root
+          mountPath: /logtail_host
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - operator: "Exists"
+      volumes:
+      - name: sock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: root
+        hostPath:
+          path: /

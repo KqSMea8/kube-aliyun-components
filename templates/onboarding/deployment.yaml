@@ -29,7 +29,7 @@ spec:
         - name: {{onboarding.name}}
           image: {{{onboarding.container}}}:{{onboarding.version}}
           ports:
-          - containerPort: {{onboarding.containerPort}}
+            - containerPort: {{onboarding.containerPort}}
           livenessProbe:
             exec:
               command:
@@ -52,4 +52,4 @@ spec:
               cpu: 100m
               memory: 128Mi
       imagePullSecrets:
-        - name: regsecret        
+        - name: regsecret
