@@ -1,0 +1,49 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: alibaba-log-controller
+  namespace: kube-system
+  labels:
+    kubernetes.io/cluster-service: "true"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: alibaba-log-controller
+        name: alibaba-log-controller
+        version: v0.1
+    spec:
+      serviceAccountName: alibaba-log-controller
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+      containers:
+      - name: alibaba-log-controller
+        image: {{{logs.controller.image}}}:{{{logs.controller.version}}}
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        env:
+          - name: "ALICLOUD_LOG_PROJECT"
+            value: "{{ logs.projectName }}"
+          - name: "ALICLOUD_LOG_ENDPOINT"
+            value: "{{ logs.endpoint }}"
+          - name: "ALICLOUD_LOG_MACHINE_GROUP"
+            value: "{{ logs.machineGroupId }}"
+          - name: "ALICLOUD_ACS_K8S_FLAG"
+            value: "true"
+          - name: "ALICLOUD_ACCESS_KEY_ID"
+            valueFrom:
+              secretKeyRef:
+                name: cloudaccesskey
+                key: AccessKeyID
+          - name: "ALICLOUD_ACCESS_KEY_SECRET"
+            valueFrom:
+              secretKeyRef:
+                name: cloudaccesskey
+                key: AccessKeySecret

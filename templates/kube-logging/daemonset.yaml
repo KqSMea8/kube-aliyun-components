@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: logtail
-        image: {{{logs.logtail.image}}}:{{{logs.logtail.version}}}
+        image: {{{ logs.logtail.image }}}:{{{ logs.logtail.version }}}
         resources:
           limits:
             memory: {{ logs.resources.limits.memory }}

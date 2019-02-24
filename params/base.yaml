@@ -23,7 +23,6 @@ logs:
   endpoint: cn-hangzhou-intranet.log.aliyuncs.com
   machineGroupId: apollo-preprod
 
-
 onboarding:
   name: onboarding
   namespace: platform

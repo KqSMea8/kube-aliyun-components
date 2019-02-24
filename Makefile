@@ -1,21 +1,14 @@
 dcr := docker-compose run --rm
-env := apollo-preprod
 
-compile-%:
-	$(dcr) ntpl compile -p params/base.yaml -p params/$(env).yaml -c $(*)
+%-apollo-my-prod: env=apollo-my-prod
+%-apollo-my-prod: osspath=kube-my-storage
 
-validate-%:
-	$(dcr) ntpl validate -p params/base.yaml -p params/$(env).yaml -c $(*)
+%-apollo-zft-prod: env=apollo-zft-prod
+%-apollo-zft-prod: osspath=kube-zft-storage
 
-apply-%:
-	$(dcr) ntpl apply -p params/base.yaml -p params/$(env).yaml -c $(*)
-
-delete-%:
-	$(dcr) ntpl delete -p params/base.yaml -p params/$(env).yaml -c $(*)
-
-config:
+config-%:
 	@echo "Pleaes make sure you have oss access"
-	$(dcr) ossutil cp -f oss://kube-platforms/$(env)/configs/config /root/.kube/config
+	$(dcr) ossutil cp -f oss://$(osspath)/$(env)/config/config /root/.kube/
 
 token:
 	$(dcr) kubectl describe -n kube-system $(shell kubectl get secret -n kube-system -o name | grep kubernetes-dashboard-token) | grep token:

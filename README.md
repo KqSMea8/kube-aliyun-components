@@ -1,11 +1,17 @@
 ### Generate kube config
 
 ```
-$ make config
+$ make config-apollo-my-prod
+```
+
+### Generate dashboard token
+```
+$ kubectl proxy &
+$ make token
 ```
 
 ### Install components
 
 ```
-$ docker-compose run --rm ntpl apply -p params/base.yaml -p params/apollo.yaml -c 01_namespaces -c kube-ingress -c dashboard -c cert-manager
+./bin/deploy.sh apollo-my-prod kube-ingress
 ```

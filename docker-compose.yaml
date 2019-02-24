@@ -4,7 +4,7 @@ version: '3.4'
 services:
 
   ntpl:
-    image: ikerry/ntpl:v0.3.7
+    image: ikerry/ntpl:v0.4.0
     working_dir: /app
     volumes:
       - "$HOME/.kube:/root/.kube"

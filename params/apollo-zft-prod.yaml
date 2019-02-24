@@ -1,0 +1,5 @@
+---
+logs:
+  projectName: kube-apollo-zft-prod
+  endpoint: cn-hangzhou-intranet.log.aliyuncs.com
+  machineGroupId: apollo-zft-prod

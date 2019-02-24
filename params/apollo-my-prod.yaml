@@ -1,0 +1,5 @@
+---
+logs:
+  projectName: kube-apollo-my-prod
+  endpoint: cn-hangzhou-intranet.log.aliyuncs.com
+  machineGroupId: apollo-my-prod
