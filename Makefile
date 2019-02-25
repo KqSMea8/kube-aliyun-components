@@ -7,7 +7,8 @@ dcr := docker-compose run --rm
 %-apollo-zft-prod: osspath=kube-zft-storage
 
 config-%:
-	@echo "Pleaes make sure you have oss access"
+	# Personal hack
+	cp ~/.oss-backup/oss-$(env) ~/.ossutilconfig
 	$(dcr) ossutil cp -f oss://$(osspath)/$(env)/config/config /root/.kube/
 
 token:
