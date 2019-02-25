@@ -23,3 +23,12 @@ $ curl <service-name>.<namespace>:<ContainerPort>
 $ kubectl proxy
 $ open http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=kube-system
 ```
+
+
+### Debugging with port
+
+- Get listened port
+```
+$ lsof -n -i4TCP:8001
+$ kill -9 <PID>
+```
