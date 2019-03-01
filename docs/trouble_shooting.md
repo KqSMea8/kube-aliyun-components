@@ -32,3 +32,10 @@ $ open http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubern
 $ lsof -n -i4TCP:8001
 $ kill -9 <PID>
 ```
+
+### inside nodes
+
+- Search ports
+```
+$ netstat -lnp | grep 1025
+```

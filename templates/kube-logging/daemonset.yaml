@@ -6,6 +6,7 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: logtail-ds
+    kubernetes.io/cluster-service: "true"
 spec:
   updateStrategy:
     type: RollingUpdate
@@ -38,10 +39,10 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
         securityContext:
-          privileged: true
+          privileged: true  
         env:
           - name: "ALIYUN_LOGTAIL_CONFIG"
-            value: "/etc/ilogtail/conf/cn_hangzhou/ilogtail_config.json"
+            value: "/etc/ilogtail/conf/cn-hangzhou/ilogtail_config.json"
           - name: "ALIYUN_LOGTAIL_USER_ID"
             valueFrom:
               secretKeyRef:

@@ -9,7 +9,7 @@ metadata:
     app: {{ingress.name}}
     repo: {{ingress.repo}}
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     rollingUpdate:
       maxUnavailable: 0
@@ -51,8 +51,8 @@ spec:
                 command: ["sleep", "15"]
           resources:
             limits:
-              cpu: 1000m
-              memory: 1Gi
+              cpu: 800m
+              memory: 0.8Gi
           ports:
             - name: http
               containerPort: 80

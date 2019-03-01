@@ -21,8 +21,12 @@
   - https://www.jianshu.com/p/1638146c04b2?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
 
 - log:
-  - https://www.alibabacloud.com/help/zh/doc-detail/74878.htm?spm=a2c63.p38356.a3.16.109e52adh8mZgO
+  - https://github.com/AlibabaCloudDocs/sls/blob/master/cn.zh-CN/%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/Logtail%20%E9%87%87%E9%9B%86/%E5%AE%89%E8%A3%85/Kubernetes%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86.md
   - https://tech.antfin.com/docs/2/66658
 
 - grpc
   - https://github.com/nginxinc/kubernetes-ingress/tree/master/examples/grpc-services
+
+- RBAC
+  - https://github.com/kubernetes/kubernetes/issues/30924
+  - https://jeremievallee.com/2018/05/28/kubernetes-rbac-namespace-user.html
