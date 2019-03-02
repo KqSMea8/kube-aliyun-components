@@ -30,4 +30,4 @@ onboarding:
   container: ikerry/node-metrics
   containerPort: 8080
   version: v0.1.1
-  dns_name: api.platform.manyuenergy.com
+  dns_name: api.manyuenergy.com

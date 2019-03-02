@@ -20,9 +20,10 @@
 - Others:
   - https://www.jianshu.com/p/1638146c04b2?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
 
-- log:
-  - https://github.com/AlibabaCloudDocs/sls/blob/master/cn.zh-CN/%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/Logtail%20%E9%87%87%E9%9B%86/%E5%AE%89%E8%A3%85/Kubernetes%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86.md
+- log:  
   - https://tech.antfin.com/docs/2/66658
+  - https://github.com/AlibabaCloudDocs/sls/blob/master/cn.zh-CN/%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/Logtail%E9%87%87%E9%9B%86/%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86/%E6%A0%87%E5%87%86Docker%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86%E6%B5%81%E7%A8%8B.md
+  - https://github.com/johnnian/Blog/issues/46
 
 - grpc
   - https://github.com/nginxinc/kubernetes-ingress/tree/master/examples/grpc-services

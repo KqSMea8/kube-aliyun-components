@@ -38,8 +38,14 @@ spec:
             - status
           initialDelaySeconds: 30
           periodSeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - /readiness-check/check.sh
+          initialDelaySeconds: 30
+          periodSeconds: 60
         securityContext:
-          privileged: true  
+          privileged: true
         env:
           - name: "ALIYUN_LOGTAIL_CONFIG"
             value: "/etc/ilogtail/conf/cn-hangzhou/ilogtail_config.json"
@@ -66,19 +72,36 @@ spec:
             value: "{{ logs.endpoint }}"
           - name: "ALICLOUD_LOG_DEFAULT_MACHINE_GROUP"
             value: "{{ logs.machineGroupId }}"
+          - name: "ALIYUN_LOG_ENV_TAGS"
+            value: "_node_name_|_node_ip_"
+          - name: "_node_name_"
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: "_node_ip_"
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP  
         volumeMounts:
         - name: sock
           mountPath: /var/run/docker.sock
         - name: root
           mountPath: /logtail_host
           readOnly: true
+        - name: logtail-readiness-check
+          mountPath: /readiness-check
+          readOnly: true
       terminationGracePeriodSeconds: 30
       tolerations:
       - operator: "Exists"
       volumes:
-      - name: sock
-        hostPath:
-          path: /var/run/docker.sock
-      - name: root
-        hostPath:
-          path: /
+        - name: logtail-readiness-check
+          configMap:
+            name: logtail-readiness-check
+            defaultMode: 0777
+        - name: sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: root
+          hostPath:
+            path: /
